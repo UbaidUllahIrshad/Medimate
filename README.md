@@ -28,5 +28,5 @@ Instead of feeling like a generic medical portal, MediMate is built to handle th
 * **Database:** PostgreSQL
 * **Backend:** Node.js + Express.js
 * **Frontend:** React.js + Vite
-* **Styling:** Vanilla CSS (Curated theme using modern typography and clean grids)
+* **Styling:** Vanilla CSS 
 * **Authentication:** Cookie-based JWT sessions
