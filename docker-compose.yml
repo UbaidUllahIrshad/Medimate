@@ -1,0 +1,41 @@
+services:
+  postgres-db:
+    image: postgres:16-alpine
+    container_name: pern-db
+    restart: always
+    environment:
+      POSTGRES_USER: postgres
+      POSTGRES_PASSWORD: "0011"
+      POSTGRES_DB: medimate
+    ports:
+      - "5432:5432"
+    volumes:
+      - postgres_data:/var/lib/postgresql/data
+
+  backend:
+    build: ./backend
+    container_name: pern-backend
+    restart: always
+    ports:
+      - "5000:5000"
+    environment:
+      PORT: 5000
+      DB_HOST: postgres-db
+      DB_PORT: 5432
+      DB_USER: postgres
+      DB_PASSWORD: "0011"
+      DB_NAME: medimate
+    depends_on:
+      - postgres-db
+
+  frontend:
+    build: ./frontend
+    container_name: pern-frontend
+    restart: always
+    ports:
+      - "3000:3000"
+    depends_on:
+      - backend
+
+volumes:
+  postgres_data:
