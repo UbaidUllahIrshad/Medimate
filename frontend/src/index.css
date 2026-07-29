@@ -91,6 +91,131 @@ a:hover {
   border-color: rgba(13, 148, 136, 0.3);
 }
 
+/* Hero Banner */
+.hero-banner {
+  display: grid;
+  grid-template-columns: 1.2fr 0.8fr;
+  gap: 1.5rem;
+  padding: 2.2rem;
+  background: linear-gradient(135deg, #ecfeff 0%, #f0fdf4 45%, #eff6ff 100%);
+  border: none;
+  overflow: hidden;
+  position: relative;
+}
+
+.hero-banner::before {
+  content: '';
+  position: absolute;
+  inset: 0;
+  background: radial-gradient(circle at top right, rgba(14, 165, 233, 0.16), transparent 38%);
+  pointer-events: none;
+}
+
+.hero-content {
+  position: relative;
+  z-index: 1;
+}
+
+.hero-badge {
+  display: inline-flex;
+  align-items: center;
+  padding: 0.4rem 0.75rem;
+  border-radius: 999px;
+  background: rgba(13, 148, 136, 0.12);
+  color: var(--primary-hover);
+  font-weight: 700;
+  font-size: 0.8rem;
+  margin-bottom: 1rem;
+}
+
+.hero-banner h1 {
+  font-size: clamp(1.8rem, 3vw, 2.8rem);
+  line-height: 1.1;
+  margin-bottom: 0.9rem;
+}
+
+.hero-banner p {
+  color: var(--text-muted);
+  font-size: 1rem;
+  max-width: 620px;
+  margin-bottom: 1.2rem;
+}
+
+.hero-actions {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.75rem;
+  margin-bottom: 1rem;
+}
+
+.hero-highlights {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.6rem;
+}
+
+.hero-highlights span {
+  background: rgba(255, 255, 255, 0.8);
+  border: 1px solid rgba(13, 148, 136, 0.16);
+  padding: 0.45rem 0.75rem;
+  border-radius: 999px;
+  font-size: 0.85rem;
+  color: var(--text-main);
+  box-shadow: var(--shadow-sm);
+}
+
+.hero-visual {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+}
+
+.hero-panel {
+  width: 100%;
+  background: rgba(255, 255, 255, 0.9);
+  border: 1px solid rgba(13, 148, 136, 0.18);
+  border-radius: var(--radius-lg);
+  padding: 1.2rem;
+  box-shadow: var(--shadow-lg);
+}
+
+.hero-panel-label {
+  font-size: 0.8rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.14em;
+  color: var(--secondary-hover);
+  margin-bottom: 0.8rem;
+}
+
+.hero-panel ul {
+  list-style: none;
+  display: grid;
+  gap: 0.6rem;
+}
+
+.hero-panel li {
+  display: flex;
+  gap: 0.55rem;
+  color: var(--text-main);
+}
+
+.hero-panel li::before {
+  content: '✓';
+  color: var(--primary);
+  font-weight: 700;
+}
+
+@media (max-width: 768px) {
+  .hero-banner {
+    grid-template-columns: 1fr;
+  }
+
+  .hero-visual {
+    order: -1;
+  }
+}
+
 /* Button UI Components */
 .btn {
   display: inline-flex;

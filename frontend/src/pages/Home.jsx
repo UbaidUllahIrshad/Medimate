@@ -128,12 +128,35 @@ const Home = () => {
 
   return (
     <div className="container">
-      {/* Header and banner */}
-      <div className="card" style={{ marginBottom: '2rem', background: 'linear-gradient(135deg, var(--primary-light) 0%, #e0f2fe 100%)', border: 'none', padding: '2.5rem 2rem' }}>
-        <h1 style={{ fontSize: '2.25rem', color: 'var(--primary-hover)', marginBottom: '0.5rem' }}>Your Smart Digital Pharmacy</h1>
-        <p style={{ color: 'var(--text-main)', opacity: 0.8, fontSize: '1.1rem', maxWidth: '600px' }}>
-          Browse medical catalogs, upload prescriptions, check out securely, and subscribe to automatic monthly refills for your chronic treatments.
-        </p>
+      {/* Hero banner */}
+      <div className="hero-banner card" style={{ marginBottom: '2rem' }}>
+        <div className="hero-content">
+          <div className="hero-badge">Fast • Secure • Trusted</div>
+          <h1>Feel better faster with a pharmacy experience built for modern life.</h1>
+          <p>
+            Discover everyday essentials, upload prescriptions in minutes, and keep your refills on track with smart reminders.
+          </p>
+          <div className="hero-actions">
+            <a href="#medicine-catalog" className="btn btn-primary">Browse medicines</a>
+            <a href="/upload-rx" className="btn btn-outline">Upload prescription</a>
+          </div>
+          <div className="hero-highlights">
+            <span>⚡ Quick checkout</span>
+            <span>🧾 Rx support</span>
+            <span>🔁 Auto refills</span>
+          </div>
+        </div>
+
+        <div className="hero-visual">
+          <div className="hero-panel">
+            <p className="hero-panel-label">Why families love Medimate</p>
+            <ul>
+              <li>Verified medicines with transparent pricing</li>
+              <li>Prescription uploads with guided assistance</li>
+              <li>Subscription plans that save time and money</li>
+            </ul>
+          </div>
+        </div>
       </div>
 
       {errorMsg && (
@@ -144,7 +167,7 @@ const Home = () => {
       )}
 
       {/* Controls: Search and Filters */}
-      <div className="card" style={{ marginBottom: '2rem', padding: '1rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
+      <div id="medicine-catalog" className="card" style={{ marginBottom: '2rem', padding: '1rem', display: 'flex', flexWrap: 'wrap', gap: '1rem', alignItems: 'center' }}>
         <div style={{ flex: 1, position: 'relative', minWidth: '250px' }}>
           <Search size={18} style={{ position: 'absolute', left: '12px', top: '50%', transform: 'translateY(-50%)', color: 'var(--text-muted)' }} />
           <input
