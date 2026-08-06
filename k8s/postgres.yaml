@@ -1,0 +1,66 @@
+apiVersion: apps/v1
+kind: StatefulSet
+metadata:
+  namespace: medimate
+  name: medimate-statefulset
+spec:
+  selector:
+    matchLabels:
+      app: medimate-db # 0. must match
+  serviceName: medimate-service # 3.
+  replicas: 1
+  template:
+    metadata:
+      labels:
+        app: medimate-db # 0.
+    spec:
+      containers:
+      - name: medimate-postgres # container name
+        image: postgres:15-alpine
+        ports:
+        - containerPort: 5432
+          name: postgres #optional
+        env:  
+        - name: POSTGRES_DB
+          valueFrom:
+            configMapKeyRef:
+              name: medimate-configmap
+              key: POSTGRES
+        - name: POSTGRES_USER  # must be exactly like this
+          valueFrom:
+           secretKeyRef:
+             name: medimate-secret
+             key: POSTGRE_USERNAME
+        - name: POSTGRES_PASSWORD   # must be exactly like this
+          valueFrom:
+            secretKeyRef:
+              name: medimate-secret
+              key: POSTGRES_PASSWORD
+  
+
+        volumeMounts:
+        - name: postgres-volume # 1. must match metadat.name in olumeClaimTemplates
+          mountPath: /var/lib/postgresql/data #standard mount path for postgres 17 and below
+  volumeClaimTemplates:
+  - metadata:
+      name: postgres-volume # 1. 
+    spec:
+      accessModes: [ "ReadWriteOnce" ]
+      resources:
+        requests:
+          storage: 1Gi
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: medimate
+  name: medimate-service # 3. must match
+spec:
+  clusterIP: None
+  selector:
+    app: medimate-db # 0.
+  ports:
+  - port: 5432 # can be any port
+    targetPort: 5432 # must match container port
+

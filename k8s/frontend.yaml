@@ -1,0 +1,38 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: medimate
+  name: frontend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: medimate-frontend
+  template:
+    metadata:
+      labels:
+        app: medimate-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: ubaid393/medimate-frontend:v1
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 80
+        # no env
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: medimate
+  name: frontend-service
+spec:
+  selector:
+    app: medimate-frontend
+  ports:
+  - port: 80
+
+      

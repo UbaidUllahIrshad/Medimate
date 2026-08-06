@@ -1,0 +1,62 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  namespace: medimate
+  name: backend-deployment
+spec:
+  selector:
+    matchLabels:
+      app: medimate-backend
+  template:
+    metadata:
+      labels:
+        app: medimate-backend
+    spec:
+      containers:
+      - name:  backend
+        image: ubaid393/medimate-backend:v1
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: 3000
+        env:
+        - name: DB_HOST # from express backend code
+          value: "medimate-service.medimate.svc.cluster.local"
+        - name: DB_PORT  # from express backend code
+          value: "5432"
+        - name: DB_NAME 
+          valueFrom:
+            configMapKeyRef:
+              name: medimate-configmap
+              key: POSTGRES
+        - name: DB_USER  # from express backend code
+          valueFrom:
+            secretKeyRef:
+              name: medimate-secret
+              key: POSTGRE_USERNAME
+        - name: DB_PASSWORD   # from express backend code
+          valueFrom:
+            secretKeyRef:
+              name: medimate-secret
+              key: POSTGRES_PASSWORD
+        - name: PORT
+          value: "3000"
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  namespace: medimate
+  name: pern-backend
+spec:
+  type: ClusterIP
+  selector:
+    app: medimate-backend  
+  ports:
+  - port: 3000
+    targetPort: 3000
+
+              
+

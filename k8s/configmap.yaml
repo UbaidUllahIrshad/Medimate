@@ -1,0 +1,9 @@
+apiVersion: v1
+kind: ConfigMap
+metadata:
+  namespace: medimate
+  name: medimate-configmap
+  labels:
+    app: medimate
+data:
+  POSTGRES: medimate_db
