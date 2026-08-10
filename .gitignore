@@ -12,8 +12,7 @@ yarn-debug.log*
 yarn-error.log*
 pnpm-debug.log*
 *.log
-*.tfstate
-*.tfstate.backup
+
 
 .DS_Store
 Thumbs.db
@@ -26,3 +25,14 @@ Thumbs.db
 uploads/
 tmp/
 temp/
+
+.terraform/
+
+*.tfstate
+*.tfstate.*
+
+*.tfvars
+
+*.pem
+*.pub
+*_keypair*
