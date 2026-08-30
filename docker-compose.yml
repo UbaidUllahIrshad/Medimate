@@ -25,6 +25,7 @@ services:
       DB_USER: postgres
       DB_PASSWORD: "0011"
       DB_NAME: medimate
+      JWT_SECRET: "medimate_production_jwt_secret_key_2026_secure"
     depends_on:
       - postgres-db
 
