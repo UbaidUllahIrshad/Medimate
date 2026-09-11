@@ -1,0 +1,51 @@
+configMap:
+  value:
+    db_name: POSTGRES
+  data:
+    db_name: "medimate_db"
+
+secrets:
+  values:
+    db_username: POSTGRE_USERNAME
+    db_password: POSTGRES_PASSWORD
+  data:
+    db_username: "postgres"
+    db_password: "001"
+
+backend:
+  image:
+    repository: ubaid393/medimate-backend:v1
+    container_port: 3000
+  port: 3000
+  env:
+    db_host: ""
+    db_port: "5432"
+  service:
+    type: ClusterIP
+    port: 3000
+    targetPort: 3000
+
+frontend:
+  image:  
+    repository: ubaid393/medimate-frontend:v2
+    container_port: 80
+  service:
+    type: ClusterIP
+    port: 80
+    targetPort: 80
+
+database:
+  image:
+    repository: postgres:15-alpine
+    container_port: 5432
+  volume:
+    mountPath: /var/lib/postgresql/data
+    storage: 1Gi
+  service:
+    clusterIP: None
+    port: 5432
+    targetPort: 5432
+
+ingress:
+  className: nginx
+  host: "medimate.local"

@@ -1,0 +1,40 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-frontend
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-frontend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-frontend
+    spec:
+      containers:
+      - name: frontend
+        image: {{.Values.frontend.image.repository}}
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: {{.Values.frontend.image.container_port}}
+        env:
+        - name: BACKEND_HOST
+          value: "{{ .Release.Name }}-backend-service:{{ .Values.backend.service.port }}"
+        
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-frontend-service
+spec:
+  selector:
+    app: {{ .Release.Name }}-frontend
+  ports:
+  - port: {{.Values.frontend.service.port}}
+    targetPort: {{ .Values.frontend.service.targetPort }}
+
+      

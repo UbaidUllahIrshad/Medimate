@@ -1,0 +1,60 @@
+apiVersion: apps/v1
+kind: Deployment
+metadata:
+  name: {{ .Release.Name }}-backend
+spec:
+  selector:
+    matchLabels:
+      app: {{ .Release.Name }}-backend
+  template:
+    metadata:
+      labels:
+        app: {{ .Release.Name }}-backend
+    spec:
+      containers:
+      - name:  backend
+        image: {{.Values.backend.image.repository}}
+        # resources:
+        #   limits:
+        #     memory: "128Mi"
+        #     cpu: "500m"
+        ports:
+        - containerPort: {{.Values.backend.image.container_port}}
+        env:
+        - name: DB_HOST # from express backend code
+          value: {{.Values.backend.env.db_host | default (printf "%s-database-service" .Release.Name) | quote }}
+        - name: DB_PORT  # from express backend code
+          value: {{.Values.backend.env.db_port | quote}}
+        - name: DB_NAME 
+          valueFrom:
+            configMapKeyRef:
+              name: {{ .Release.Name }}-configmap
+              key: {{.Values.configMap.value.db_name}}
+        - name: DB_USER  # from express backend code
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key: {{.Values.secrets.values.db_username}}
+        - name: DB_PASSWORD   # from express backend code
+          valueFrom:
+            secretKeyRef:
+              name: {{ .Release.Name }}-secret
+              key:  {{.Values.secrets.values.db_password}}
+        - name: PORT
+          value: {{.Values.backend.port | quote}}
+
+---
+apiVersion: v1
+kind: Service
+metadata:
+  name: {{ .Release.Name }}-backend-service
+spec:
+  type:  {{.Values.backend.service.type}}
+  selector:
+    app: {{ .Release.Name }}-backend  
+  ports:
+  - port: {{.Values.backend.service.port}}
+    targetPort: {{.Values.backend.service.targetPort}}
+
+              
+
